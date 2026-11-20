@@ -1,0 +1,40 @@
+name: Build Mac installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get JUCE 8.0.4
+        run: git clone --depth 1 --branch 8.0.4 https://github.com/juce-framework/JUCE.git JUCE
+
+      - name: Build (unsigned, universal)
+        run: ./scripts/build_release.sh
+
+      - name: Publish build to the build-output branch
+        run: |
+          VER=$(sed -n 's/^project(ReverseReverb VERSION \([0-9.]*\)).*/\1/p' CMakeLists.txt)
+          mkdir -p /tmp/out
+          cp "Release/Reverse Reverb $VER Mac.zip" /tmp/out/
+          cp "Release/Reverse Reverb $VER/Mac/Reverse Reverb $VER Installer.pkg" /tmp/out/
+          cd /tmp/out
+          git init -q -b build-output
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add .
+          git commit -q -m "Reverse Reverb $VER Mac build"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" build-output
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reverse-reverb-mac
+          path: Release/*.zip

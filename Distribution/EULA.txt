@@ -1,0 +1,15 @@
+REVERSE REVERB - LICENCE AGREEMENT
+
+By installing Reverse Reverb you agree to these terms with Gil Lewis.
+
+1. You may install and use Reverse Reverb on up to 2 computers you own.
+2. Audio you make with it is yours to use in any work, royalty-free.
+3. You may not share, resell or redistribute the software.
+4. The software is provided "as is", without warranty. Gil Lewis is not
+   liable for any loss arising from its use, beyond the amount you paid.
+5. This agreement is governed by the laws of England and Wales.
+
+Built with JUCE. VST is a trademark of Steinberg Media Technologies GmbH.
+Audio Unit is a trademark of Apple Inc.
+
+Gil Lewis - gillewis.com - gillewis@gmail.com
